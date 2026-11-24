@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>An An Milk Tea Picity – Đặt món online</title>
+<style>
+:root{--pink:#ff5f8f;--pink2:#ffe3ec;--cream:#fff8f1;--dark:#34252b;--muted:#8a7279;--green:#2f8f68;--line:#f0ddd5;--card:#fff;--r:20px;--amber:#e8a317;--red:#d1363b;--blue:#2f6fd1}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--cream);color:var(--dark);padding-bottom:90px}
+button{font:inherit;cursor:pointer;border:0}
+button:disabled{opacity:.6;cursor:wait}
+input,textarea,select{font:inherit}
+a{color:inherit}
+header{position:sticky;top:0;z-index:20;background:#fffdf9f2;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top{max-width:1100px;margin:auto;padding:12px 16px;display:flex;align-items:center;gap:12px}
+.brand{font-weight:900;color:var(--pink);font-size:19px;flex:1}
+.brand small{display:block;color:var(--muted);font-weight:600;font-size:12px}
+.iconbtn{background:var(--pink2);color:var(--dark);border-radius:999px;padding:9px 13px;font-weight:700;position:relative}
+.badge{position:absolute;top:-6px;right:-6px;background:var(--pink);color:#fff;border-radius:999px;font-size:11px;min-width:20px;height:20px;display:grid;place-items:center;padding:0 5px}
+.wrap{max-width:1100px;margin:auto;padding:16px}
+.hero{background:linear-gradient(135deg,#ffd2df,#fff0c3);border-radius:28px;padding:24px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.hero h1{margin:0 0 6px;font-size:clamp(26px,5vw,42px);line-height:1.05}
+.hero p{margin:0;color:#6b5158}
+.hero .big{font-size:80px}
+.online{display:inline-block;margin-top:10px;font-size:12px;font-weight:800;padding:5px 10px;border-radius:999px;background:#e5f4ed;color:var(--green)}
+.online.off{background:#fff1d6;color:#9a6a00}
+.search{margin:16px 0 8px;display:flex;gap:10px}
+.search input{flex:1;padding:13px 16px;border-radius:999px;border:1px solid var(--line);background:#fff}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:6px 0 12px;scrollbar-width:none}
+.tab{background:#fff;border:1px solid var(--line);padding:9px 15px;border-radius:999px;white-space:nowrap;font-weight:700;color:var(--dark)}
+.tab.on{background:var(--dark);color:#fff;border-color:var(--dark)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.item{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:0 8px 24px #7e5f6812;display:flex;flex-direction:column;gap:6px}
+.item .emo{font-size:46px;background:var(--pink2);border-radius:16px;height:96px;display:grid;place-items:center}
+.item h3{margin:6px 0 0;font-size:17px}
+.item p{margin:0;color:var(--muted);font-size:13px;flex:1}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.price{font-weight:900;color:var(--pink)}
+.add{background:var(--pink);color:#fff;border-radius:999px;padding:9px 15px;font-weight:800}
+.tag{font-size:11px;background:#e5f4ed;color:var(--green);padding:3px 8px;border-radius:999px;font-weight:800;align-self:flex-start}
+.empty{text-align:center;color:var(--muted);padding:30px}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:#fffdf9f5;border-top:1px solid var(--line);display:none}
+.bar.show{display:block}
+.bar button{width:100%;max-width:700px;margin:auto;display:flex;justify-content:space-between;background:var(--green);color:#fff;border-radius:999px;padding:15px 20px;font-weight:900}
+.ov{position:fixed;inset:0;background:#0006;z-index:50;display:none;align-items:flex-end;justify-content:center}
+.ov.show{display:flex}
+.sheet{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:26px 26px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom));animation:up .22s ease}
+@media(min-width:700px){.ov{align-items:center}.sheet{border-radius:26px}}
+@keyframes up{from{transform:translateY(40px);opacity:.5}to{transform:none;opacity:1}}
+.sheet h2{margin:0 0 4px}
+.close{float:right;background:var(--pink2);border-radius:999px;width:36px;height:36px;font-size:18px}
+.grp{margin:16px 0}
+.grp h4{margin:0 0 8px;font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:9px 13px;font-weight:650;color:var(--dark)}
+.opt.on{border-color:var(--pink);background:var(--pink2)}
+.opt small{color:var(--muted);font-weight:600}
+.qty{display:flex;align-items:center;gap:10px}
+.qty button{width:34px;height:34px;border-radius:999px;background:var(--pink2);font-weight:900;font-size:17px;color:var(--dark)}
+.qty b{min-width:20px;text-align:center}
+.primary{width:100%;background:var(--pink);color:#fff;border-radius:999px;padding:15px;font-weight:900;margin-top:10px}
+.primary.green{background:var(--green)}
+.ghost{width:100%;background:var(--pink2);color:var(--dark);border-radius:999px;padding:13px;font-weight:800;margin-top:8px}
+textarea,.field{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;margin-top:6px}
+.cline{display:flex;gap:10px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.cline .emo{font-size:30px;width:52px;height:52px;border-radius:14px;background:var(--pink2);display:grid;place-items:center;flex:none}
+.cline .info{flex:1}
+.cline .info div{font-size:12px;color:var(--muted)}
+.sum{margin-top:12px}
+.sum .row{padding:4px 0}
+.sum .total{font-size:20px;font-weight:900;border-top:1px solid var(--line);margin-top:6px;padding-top:10px}
+.mode{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mode .opt{text-align:center}
+.voucher{display:flex;gap:8px}
+.voucher input{flex:1}
+.voucher button{background:var(--dark);color:#fff;border-radius:14px;padding:0 16px;font-weight:800;margin-top:6px}
+.msg{font-size:13px;margin-top:6px}
+.ok{color:var(--green)}.err{color:var(--red)}
+.toast{position:fixed;left:50%;top:18px;transform:translateX(-50%);background:var(--dark);color:#fff;padding:11px 18px;border-radius:999px;z-index:99;font-weight:700;display:none}
+.receipt{background:var(--cream);border-radius:16px;padding:14px;font-family:ui-monospace,Consolas,monospace;font-size:13px;white-space:pre-wrap}
+.hist{border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:10px}
+.hist .row div{font-size:13px;color:var(--muted)}
+.notice{border-radius:16px;padding:12px 14px;margin:10px 0;font-size:14px;font-weight:600}
+.notice.ok{background:#e5f4ed}
+.notice.warn{background:#fff1d6;color:#7a5400}
+.notice.bad{background:#fde5e5;color:var(--red)}
+.pay{background:var(--cream);border-radius:16px;padding:14px;margin-top:10px;text-align:center}
+.pay img{width:230px;max-width:100%;border-radius:12px;background:#fff}
+.pay .acc{font-size:20px;font-weight:900;letter-spacing:.04em}
+.pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800;background:var(--pink2)}
+.st-Mới{background:#fde5e5;color:var(--red)}
+.st-Đã-nhận,.st-Đang-pha{background:#fff1d6;color:#7a5400}
+.st-Sẵn-sàng,.st-Đang-giao{background:#e3edff;color:var(--blue)}
+.st-Hoàn-thành{background:#e5f4ed;color:var(--green)}
+.st-Đã-hủy{background:#eee;color:#777}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:24px}
+footer button{background:none;color:var(--muted);text-decoration:underline;font-size:12px}
+/* ---------- ADMIN ---------- */
+#admin{position:fixed;inset:0;background:#f6f1ee;z-index:70;display:none;overflow:auto}
+#admin.show{display:block}
+.ahead{position:sticky;top:0;background:var(--dark);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:10px;z-index:2}
+.ahead b{flex:1;font-size:17px}
+.ahead button{background:#ffffff22;color:#fff;border-radius:999px;padding:8px 12px;font-weight:700}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px}
+.kpi{background:#fff;border-radius:16px;padding:12px}
+.kpi div{font-size:12px;color:var(--muted);font-weight:700}
+.kpi b{font-size:22px}
+.olist{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.ocard{background:#fff;border-radius:18px;padding:14px;box-shadow:0 6px 18px #0000000d;border-left:6px solid var(--line)}
+.ocard.new{border-left-color:var(--red);animation:pulse 1.2s ease 3}
+@keyframes pulse{50%{box-shadow:0 0 0 6px #ff5f8f44}}
+.ocard .lines{font-size:14px;margin:8px 0;padding:8px 10px;background:var(--cream);border-radius:12px}
+.ocard .lines div{padding:2px 0}
+.ocard .lines small{color:var(--muted)}
+.ocard .meta{font-size:13px;color:var(--muted)}
+.abtns{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.abtns button{flex:1;min-width:90px;border-radius:12px;padding:10px;font-weight:800;background:var(--pink2);color:var(--dark)}
+.abtns .go{background:var(--green);color:#fff}
+.abtns .cancel{background:#eee;color:#777}
+.login{max-width:360px;margin:60px auto;background:#fff;border-radius:22px;padding:22px;text-align:center}
+</style>
+</head>
+<body>
+<header><div class="top">
+  <div class="brand">🧋 AN AN MILK TEA<small>Trà sữa • Ăn vặt • Đặt món online</small></div>
+  <button class="iconbtn" onclick="openHistory()" title="Đơn đã đặt">🧾</button>
+  <button class="iconbtn" onclick="openCart()">🛒<span class="badge" id="badge">0</span></button>
+</div></header>
+<div class="wrap">
+  <div class="hero">
+    <div><h1>Chọn món – Đặt online – Quán nhận ngay</h1>
+      <p>Đặt món trên điện thoại, đơn được gửi thẳng đến chủ quán. Theo dõi trạng thái đơn và thanh toán bằng mã QR.</p>
+      <span class="online" id="onlineTag"></span></div>
+    <div class="big">🧋</div>
+  </div>
+  <div class="search"><input id="q" placeholder="🔍 Tìm món: trà sữa, khoai môn, sữa chua..." oninput="renderMenu()"></div>
+  <div class="tabs" id="tabs"></div>
+  <div class="grid" id="menu"></div>
+</div>
+<footer>© An An Milk Tea – Picity • Menu & giá theo bảng menu của quán.<br><button onclick="openAdmin()">🔐 Dành cho chủ quán</button></footer>
+<div class="bar" id="bar"><button onclick="openCart()"><span id="barCount">0 món</span><span>Xem giỏ hàng • <b id="barTotal">0đ</b></span></button></div>
+<div class="ov" id="ovItem" onclick="if(event.target===this)closeOv('ovItem')"><div class="sheet" id="itemSheet"></div></div>
+<div class="ov" id="ovCart" onclick="if(event.target===this)closeOv('ovCart')"><div class="sheet" id="cartSheet"></div></div>
+<div class="ov" id="ovDone" onclick="if(event.target===this)closeOv('ovDone')"><div class="sheet" id="doneSheet"></div></div>
+<div id="admin"></div>
+<div class="toast" id="toast"></div>
+<script>
+/* ===================== CẤU HÌNH QUÁN – CHỈNH TẠI ĐÂY ===================== */
+const SHOP = {
+  name: "An An Milk Tea – Picity",
+  phone: "0985425329",          // số gọi điện
+  zalo: "0985425329",           // số Zalo
+  bankName: "Cake by VPBank",
+  bankBin: "546034",            // mã BIN VietQR của Cake by VPBank – không cần sửa
+  bankAcc: "0985425329",        // số tài khoản
+  bankHolder: "TRAN THI TINH",  // tên chủ tài khoản (KHÔNG dấu) – kiểm tra lại
+  openHour: 8, closeHour: 22,   // MẪU – cập nhật giờ thật
+  deliveryFee: 10000,           // MẪU
+  freeShipFrom: 100000          // MẪU
+};
+/* ĐẶT HÀNG ONLINE & BÁO CHỦ QUÁN
+   Cách A (khuyên dùng): dán URL Web App Google Apps Script vào apiUrl
+     → đơn lưu vào Google Sheets, báo chủ quán qua Telegram/Email, có trang quản lý đơn.
+   Cách B (nhanh): chỉ điền telegramToken + telegramChatId → báo đơn qua Telegram, không có trang quản lý.
+   Để trống cả hai → app chạy chế độ cũ (khách gửi đơn qua Zalo). */
+const ONLINE = {
+  apiUrl: "https://script.google.com/macros/s/AKfycby2yn7UdhRwfDL6cpOmHhQ3NxI2cflqbqrlxTRmQV3cxXPtGpt_7fyVml1uptXztyOb/exec",            // VD: "https://script.google.com/macros/s/XXXX/exec"
+  telegramToken: "",     // chỉ dùng cho Cách B
+  telegramChatId: "",    // chỉ dùng cho Cách B
+  pollSeconds: 15        // chu kỳ kiểm tra đơn mới / trạng thái đơn (giây)
+};
+const VOUCHERS = {      // MẪU – xóa hoặc sửa theo chương trình thật của quán
+  PICITY10: {type:"pct", value:10, min:50000, label:"Giảm 10% cho cư dân Picity (đơn từ 50k)"},
+  FREESHIP: {type:"ship", value:0, min:0, label:"Miễn phí giao hàng"}
+};
+const SIZES = [{id:"M",label:"Size chuẩn",add:0}];
+const SUGAR = ["100%","70%","50%","30%","0%"];
+const ICE   = ["Đá bình thường","Ít đá","Không đá"];
+const TOPPINGS = [];
+const CATS = ["Tất cả","Trà sữa / Latte","Tea","Món khác / Ăn vặt"];
+const MENU = [
+  {id:1,cat:"Trà sữa / Latte",name:"Trà sữa truyền thống",desc:"",price:20000,emo:"🧋",drink:true,hot:true},
+  {id:2,cat:"Trà sữa / Latte",name:"Trà sữa Thái xanh",desc:"",price:20000,emo:"💚",drink:true},
+  {id:3,cat:"Trà sữa / Latte",name:"Trà sữa khoai môn",desc:"",price:20000,emo:"💜",drink:true},
+  {id:4,cat:"Trà sữa / Latte",name:"Sữa tươi trân châu",desc:"",price:20000,emo:"🥛",drink:true,hot:true},
+  {id:5,cat:"Trà sữa / Latte",name:"Matcha latte",desc:"",price:25000,emo:"🍵",drink:true},
+  {id:6,cat:"Trà sữa / Latte",name:"Khoai môn latte",desc:"",price:25000,emo:"🟣",drink:true},
+  {id:7,cat:"Trà sữa / Latte",name:"Cacao latte",desc:"",price:25000,emo:"🍫",drink:true},
+  {id:8,cat:"Tea",name:"Trà dâu",desc:"",price:20000,emo:"🍓",drink:true},
+  {id:9,cat:"Tea",name:"Trà việt quất",desc:"",price:20000,emo:"🫐",drink:true},
+  {id:10,cat:"Tea",name:"Trà tắc",desc:"",price:10000,emo:"🍋",drink:true,hot:true},
+  {id:11,cat:"Tea",name:"Hồng trà trân châu",desc:"",price:20000,emo:"🧋",drink:true},
+  {id:12,cat:"Món khác / Ăn vặt",name:"Milo dầm",desc:"",price:20000,emo:"🥤"},
+  {id:13,cat:"Món khác / Ăn vặt",name:"Đá bào siro",desc:"",price:10000,emo:"🍧"},
+  {id:14,cat:"Món khác / Ăn vặt",name:"Sữa chua chanh leo",desc:"",price:20000,emo:"🥭"},
+  {id:15,cat:"Món khác / Ăn vặt",name:"Sữa chua trân châu",desc:"",price:20000,emo:"🍶"},
+  {id:16,cat:"Món khác / Ăn vặt",name:"Sữa chua việt quất",desc:"",price:20000,emo:"🫐"},
+  {id:17,cat:"Món khác / Ăn vặt",name:"Bánh tráng trộn",desc:"",price:15000,emo:"🥗",hot:true}
+];
+/* ======================================================================== */
+const STATUSES = ["Mới","Đã nhận","Đang pha","Sẵn sàng","Đang giao","Hoàn thành","Đã hủy"];
+const fmt = n => Number(n||0).toLocaleString("vi-VN")+"đ";
+const $ = id => document.getElementById(id);
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const stCls = s => "pill st-"+String(s).replace(/\s/g,"-");
+const MODE = ONLINE.apiUrl ? "server" : (ONLINE.telegramToken && ONLINE.telegramChatId ? "telegram" : "offline");
+let cat = "Tất cả";
+let cart = JSON.parse(localStorage.getItem("anan_cart")||"[]");
+let state = Object.assign({mode:"pickup",receiveType:"asap",receiveTime:"",pay:"cash",name:"",phone:"",addr:"",note:"",voucher:""},JSON.parse(localStorage.getItem("anan_info")||"{}"));
+let cur = null, pollT = null;
+function getReceiveTimeText(st){
+  if(st.receiveType==="custom" && st.receiveTime) return "Hẹn lúc " + st.receiveTime;
+  return "Nhận ngay (càng sớm càng tốt)";
+}
+function defaultTimeStr(){
+  const d=new Date(Date.now()+30*60000);
+  return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+}
+function save(){localStorage.setItem("anan_cart",JSON.stringify(cart));localStorage.setItem("anan_info",JSON.stringify(state));updateBar();}
+function toast(t){const e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(e._t);e._t=setTimeout(()=>e.style.display="none",1800);}
+function closeOv(id){$(id).classList.remove("show");if(id==="ovDone"&&pollT){clearInterval(pollT);pollT=null;}}
+function getHist(){return JSON.parse(localStorage.getItem("anan_hist")||"[]");}
+function setHist(h){localStorage.setItem("anan_hist",JSON.stringify(h.slice(0,20)));}
+/* ---------- KẾT NỐI ONLINE ---------- */
+async function api(method,params){
+  if(method==="GET"){const r=await fetch(ONLINE.apiUrl+"?"+new URLSearchParams(params));return r.json();}
+  const r=await fetch(ONLINE.apiUrl,{method:"POST",body:JSON.stringify(params)}); // text/plain → không cần preflight
+  return r.json();
+}
+async function notifyTelegram(text){
+  const body=new URLSearchParams({chat_id:ONLINE.telegramChatId,text});
+  const r=await fetch(`https://api.telegram.org/bot${ONLINE.telegramToken}/sendMessage`,{method:"POST",body});
+  const j=await r.json(); if(!j.ok) throw new Error(j.description||"Telegram lỗi");
+}
+/* ---------- MENU ---------- */
+function renderTabs(){$("tabs").innerHTML=CATS.map(c=>`<button class="tab ${c===cat?'on':''}" onclick="cat='${c}';renderTabs();renderMenu()">${c}</button>`).join("");}
+function renderMenu(){
+  const q=$("q").value.trim().toLowerCase();
+  const list=MENU.filter(m=>(cat==="Tất cả"||m.cat===cat)&&(!q||(m.name+m.desc).toLowerCase().includes(q)));
+  $("menu").innerHTML=list.length?list.map(m=>`
+   <div class="item"><div class="emo">${m.emo}</div>${m.hot?'<span class="tag">BÁN CHẠY</span>':''}
+     <h3>${m.name}</h3><p>${m.desc}</p>
+     <div class="row"><span class="price">${fmt(m.price)}</span><button class="add" onclick="openItem(${m.id})">+ Thêm</button></div></div>`).join(""):`<div class="empty">Không tìm thấy món phù hợp 😢</div>`;
+}
+/* ---------- ITEM ---------- */
+function openItem(id){const m=MENU.find(x=>x.id===id);cur={m,size:"M",sugar:"70%",ice:"Đá bình thường",tops:[],qty:1,note:""};renderItem();$("ovItem").classList.add("show");}
+function itemUnit(c){let p=c.m.price;if(c.m.drink){p+=SIZES.find(s=>s.id===c.size).add;p+=c.tops.reduce((a,t)=>a+TOPPINGS.find(x=>x.id===t).price,0);}return p;}
+function renderItem(){
+  const c=cur,m=c.m;
+  let h=`<button class="close" onclick="closeOv('ovItem')">✕</button><h2>${m.emo} ${m.name}</h2><div style="color:var(--muted)">${m.desc}</div>`;
+  if(m.drink){
+    h+=(SIZES.length>1?`<div class="grp"><h4>Size</h4><div class="opts">${SIZES.map(s=>`<button class="opt ${c.size===s.id?'on':''}" onclick="cur.size='${s.id}';renderItem()">${s.label} <small>${s.add?'+'+fmt(s.add):''}</small></button>`).join("")}</div></div>`:``)+`
+    <div class="grp"><h4>Lượng đường</h4><div class="opts">${SUGAR.map(s=>`<button class="opt ${c.sugar===s?'on':''}" onclick="cur.sugar='${s}';renderItem()">${s}</button>`).join("")}</div></div>
+    <div class="grp"><h4>Đá</h4><div class="opts">${ICE.map(s=>`<button class="opt ${c.ice===s?'on':''}" onclick="cur.ice='${s}';renderItem()">${s}</button>`).join("")}</div></div>`+
+    (TOPPINGS.length?`<div class="grp"><h4>Topping</h4><div class="opts">${TOPPINGS.map(t=>`<button class="opt ${c.tops.includes(t.id)?'on':''}" onclick="toggleTop('${t.id}')">${t.name} <small>+${fmt(t.price)}</small></button>`).join("")}</div></div>`:``);
+  }
+  h+=`<div class="grp"><h4>Ghi chú món</h4><input class="field" placeholder="VD: ít ngọt hơn..." value="${esc(c.note)}" oninput="cur.note=this.value"></div>
+  <div class="row"><div class="qty"><button onclick="cur.qty=Math.max(1,cur.qty-1);renderItem()">−</button><b>${c.qty}</b><button onclick="cur.qty++;renderItem()">+</button></div>
+  <span class="price" style="font-size:20px">${fmt(itemUnit(c)*c.qty)}</span></div>
+  <button class="primary" onclick="addToCart()">Thêm vào giỏ</button>`;
+  $("itemSheet").innerHTML=h;
+}
+function toggleTop(id){const i=cur.tops.indexOf(id);i<0?cur.tops.push(id):cur.tops.splice(i,1);renderItem();}
+function optText(l){
+  if(!l.drink)return l.note?`Ghi chú: ${l.note}`:"";
+  const tops=(l.tops||[]).map(t=>(TOPPINGS.find(x=>x.id===t)||{name:t}).name).join(", ");
+  return `${SIZES.length>1?"Size "+l.size+" • ":""}Đường ${l.sugar} • ${l.ice}${tops?' • '+tops:''}${l.note?' • '+l.note:''}`;
+}
+function addToCart(){
+  const c=cur,key=[c.m.id,c.size,c.sugar,c.ice,[...c.tops].sort().join("+"),c.note].join("|");
+  const ex=cart.find(l=>l.key===key);
+  if(ex)ex.qty+=c.qty;
+  else cart.push({key,id:c.m.id,name:c.m.name,emo:c.m.emo,drink:!!c.m.drink,size:c.size,sugar:c.sugar,ice:c.ice,tops:[...c.tops],note:c.note,unit:itemUnit(c),qty:c.qty});
+  save();closeOv("ovItem");toast("Đã thêm "+c.m.name);
+}
+/* ---------- CART ---------- */
+function calc(){
+  // luôn tính lại giá theo MENU hiện tại (tránh giá cũ còn lưu trong giỏ)
+  cart.forEach(l=>{const m=MENU.find(x=>x.id===l.id);if(m)l.unit=itemUnit({m,size:l.size,tops:l.tops||[]});});
+  const sub=cart.reduce((a,l)=>a+l.unit*l.qty,0);
+  let ship=state.mode==="delivery"?(sub>=SHOP.freeShipFrom?0:SHOP.deliveryFee):0;
+  let disc=0,vmsg="",vok=false;
+  const code=(state.voucher||"").toUpperCase(),v=VOUCHERS[code];
+  if(code){
+    if(!v)vmsg="Mã không hợp lệ";
+    else if(sub<v.min)vmsg=`Cần đơn tối thiểu ${fmt(v.min)}`;
+    else{vok=true;vmsg="✓ "+v.label;if(v.type==="pct")disc=Math.round(sub*v.value/100);if(v.type==="amt")disc=v.value;if(v.type==="ship")ship=0;}
+  }
+  return {sub,ship,disc,total:Math.max(0,sub+ship-disc),vmsg,vok,count:cart.reduce((a,l)=>a+l.qty,0)};
+}
+function updateBar(){const s=calc();$("badge").textContent=s.count;$("barCount").textContent=s.count+" món";$("barTotal").textContent=fmt(s.total);$("bar").classList.toggle("show",s.count>0);}
+function openCart(){renderCart();$("ovCart").classList.add("show");}
+function chQty(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);save();renderCart();}
+function setF(k,v){state[k]=v;save();}
+function renderCart(){
+  const s=calc();
+  if(!cart.length){$("cartSheet").innerHTML=`<button class="close" onclick="closeOv('ovCart')">✕</button><h2>🛒 Giỏ hàng</h2><div class="empty">Giỏ hàng đang trống.<br>Hãy chọn một ly thật ngon nhé!</div><button class="primary" onclick="closeOv('ovCart')">Xem menu</button>`;return;}
+  let h=`<button class="close" onclick="closeOv('ovCart')">✕</button><h2>🛒 Giỏ hàng</h2>`;
+  h+=cart.map((l,i)=>`<div class="cline"><div class="emo">${l.emo}</div><div class="info"><b>${l.name}</b><div>${esc(optText(l))}</div><span class="price">${fmt(l.unit*l.qty)}</span></div>
+    <div class="qty"><button onclick="chQty(${i},-1)">−</button><b>${l.qty}</b><button onclick="chQty(${i},1)">+</button></div></div>`).join("");
+  if(!state.receiveTime) state.receiveTime = defaultTimeStr();
+  h+=`<div class="grp"><h4>Hình thức nhận</h4><div class="mode">
+      <button class="opt ${state.mode==='pickup'?'on':''}" onclick="setF('mode','pickup');renderCart()">🏪 Tự đến lấy</button>
+      <button class="opt ${state.mode==='delivery'?'on':''}" onclick="setF('mode','delivery');renderCart()">🛵 Giao tận nơi</button></div></div>
+   <div class="grp"><h4>⏰ Thời gian nhận hàng</h4><div class="mode">
+      <button class="opt ${state.receiveType!=='custom'?'on':''}" onclick="setF('receiveType','asap');renderCart()">⚡ Nhận ngay</button>
+      <button class="opt ${state.receiveType==='custom'?'on':''}" onclick="setF('receiveType','custom');renderCart()">🕒 Chọn giờ nhận</button></div>
+      ${state.receiveType==='custom'?`<div style="margin-top:8px"><input class="field" type="time" value="${esc(state.receiveTime)}" oninput="setF('receiveTime',this.value)"></div>`:`<div class="msg" style="color:var(--muted)">Quán sẽ chuẩn bị và giao/trả món sớm nhất có thể.</div>`}</div>
+   <div class="grp"><h4>Thông tin khách</h4>
+      <input class="field" placeholder="Tên của bạn *" value="${esc(state.name)}" oninput="setF('name',this.value)">
+      <input class="field" type="tel" placeholder="Số điện thoại *" value="${esc(state.phone)}" oninput="setF('phone',this.value)">
+      ${state.mode==='delivery'?`<input class="field" placeholder="Địa chỉ / Block – Căn hộ (VD: Picity C1-12.05) *" value="${esc(state.addr)}" oninput="setF('addr',this.value)">`:''}
+      <textarea rows="2" placeholder="Ghi chú cho quán (ít đá, giao bảo vệ, ...)" oninput="setF('note',this.value)">${esc(state.note)}</textarea></div>
+   <div class="grp"><h4>Thanh toán</h4><div class="mode">
+      <button class="opt ${state.pay==='cash'?'on':''}" onclick="setF('pay','cash');renderCart()">💵 Tiền mặt khi nhận</button>
+      <button class="opt ${state.pay==='bank'?'on':''}" onclick="setF('pay','bank');renderCart()">🏦 Chuyển khoản QR</button></div>
+      ${state.pay==='bank'?`<div class="msg" style="color:var(--muted)">Mã QR ${SHOP.bankName} sẽ hiện sau khi đặt đơn, đã điền sẵn số tiền và nội dung.</div>`:''}</div>
+   <div class="grp"><h4>Mã giảm giá</h4><div class="voucher"><input class="field" id="vin" placeholder="Nhập mã (VD: PICITY10)" value="${esc(state.voucher)}"><button onclick="setF('voucher',$('vin').value.trim());renderCart()">Áp dụng</button></div>
+      ${s.vmsg?`<div class="msg ${s.vok?'ok':'err'}">${s.vmsg}</div>`:''}</div>
+   <div class="sum">
+     <div class="row"><span>Tạm tính</span><span>${fmt(s.sub)}</span></div>
+     ${state.mode==='delivery'?`<div class="row"><span>Phí giao hàng ${s.sub>=SHOP.freeShipFrom?'(miễn phí từ '+fmt(SHOP.freeShipFrom)+')':''}</span><span>${fmt(s.ship)}</span></div>`:''}
+     ${s.disc?`<div class="row ok"><span>Giảm giá</span><span>−${fmt(s.disc)}</span></div>`:''}
+     <div class="row total"><span>Tổng cộng</span><span class="price">${fmt(s.total)}</span></div>
+   </div>
+   <div class="msg err" id="cerr"></div>
+   <button class="primary green" id="ckBtn" onclick="checkout()">${MODE==='offline'?'Xác nhận đặt món':'🚀 Đặt hàng online'}</button>
+   <button class="ghost" onclick="if(confirm('Xóa toàn bộ giỏ hàng?')){cart=[];save();renderCart()}">Xóa giỏ hàng</button>`;
+  $("cartSheet").innerHTML=h;
+}
+/* ---------- ĐẶT HÀNG ---------- */
+function buildText(o){
+  const rTime = o.receiveTime || "Nhận ngay (càng sớm càng tốt)";
+  let t=`🧋 ĐƠN HÀNG ${o.code} – ${SHOP.name}\n🕒 Đặt lúc: ${o.time}\n⏰ Thời gian nhận: ${rTime}\n👤 ${o.name} – ${o.phone}\n${o.mode==='delivery'?'🛵 Giao đến: '+o.addr:'🏪 Khách tự đến lấy'}\n------------------------\n`;
+  o.items.forEach((l,i)=>{t+=`${i+1}. ${l.name} x${l.qty} = ${fmt(l.unit*l.qty)}\n`;const x=optText(l);if(x)t+=`   ${x}\n`;});
+  t+=`------------------------\nTạm tính: ${fmt(o.sub)}\n`;
+  if(o.mode==='delivery')t+=`Phí giao: ${fmt(o.ship)}\n`;
+  if(o.disc)t+=`Giảm giá (${o.voucher}): -${fmt(o.disc)}\n`;
+  t+=`TỔNG: ${fmt(o.total)}\n💳 ${o.pay==='bank'?'Chuyển khoản '+SHOP.bankName:'Tiền mặt khi nhận'}\n`;
+  if(o.note)t+=`Ghi chú: ${o.note}\n`;
+  return t;
+}
+async function sendOrder(o){
+  try{
+    if(MODE==="server"){
+      const payload=Object.assign({},o,{note:o.serverNote||o.note,items:o.items.map(l=>({id:l.id,name:l.name,qty:l.qty,unit:l.unit,opt:optText(l)}))});
+      const r=await api("POST",{action:"create",order:payload});
+      if(!r.ok)throw new Error(r.error||"Máy chủ từ chối đơn");
+      o.sent="server";o.status="Mới";
+    }else if(MODE==="telegram"){
+      await notifyTelegram("🔔 ĐƠN MỚI\n"+buildText(o));o.sent="telegram";
+    }else o.sent="offline";
+    delete o.err;
+  }catch(err){o.sent="fail";o.err=String(err.message||err);}
+  return o;
+}
+async function checkout(){
+  const e=$("cerr");
+  if(!state.name.trim())return e.textContent="Vui lòng nhập tên.";
+  if(!/^0\d{9}$/.test(state.phone.replace(/\s/g,"")))return e.textContent="Số điện thoại chưa đúng (10 số, bắt đầu bằng 0).";
+  if(state.mode==="delivery"&&!state.addr.trim())return e.textContent="Vui lòng nhập địa chỉ giao hàng.";
+  if(state.receiveType==="custom"&&!state.receiveTime)return e.textContent="Vui lòng chọn giờ nhận hàng.";
+  const h=new Date().getHours();
+  if((h<SHOP.openHour||h>=SHOP.closeHour)&&!confirm(`Quán thường mở ${SHOP.openHour}h–${SHOP.closeHour}h. Vẫn gửi đơn?`))return;
+  const btn=$("ckBtn");btn.disabled=true;btn.textContent="⏳ Đang gửi đơn đến quán...";
+  const s=calc();
+  const rTimeText=getReceiveTimeText(state);
+  const fullNote=[`⏰ Nhận: ${rTimeText}`, state.note.trim()].filter(Boolean).join(" | ");
+  let o={code:"AA"+Date.now().toString().slice(-6),time:new Date().toLocaleString("vi-VN"),ts:Date.now(),name:state.name.trim(),phone:state.phone.replace(/\s/g,""),mode:state.mode,receiveTime:rTimeText,addr:state.addr,note:state.note.trim(),serverNote:fullNote,pay:state.pay,
+    voucher:s.vok?state.voucher.toUpperCase():"",items:JSON.parse(JSON.stringify(cart)),sub:s.sub,ship:s.ship,disc:s.disc,total:s.total,status:"Mới"};
+  copyStr(buildText(o),"Đã sao chép đơn hàng! Bấm gửi Zalo cho quán nhé.");
+  o=await sendOrder(o);
+  const hist=getHist();hist.unshift(o);setHist(hist);
+  cart=[];state.voucher="";state.note="";save();closeOv("ovCart");showDone(o);
+}
+async function resend(code){
+  const hist=getHist(),i=hist.findIndex(x=>x.code===code);if(i<0)return;
+  toast("Đang gửi lại...");hist[i]=await sendOrder(hist[i]);setHist(hist);showDone(hist[i]);
+}
+function payBlock(o){
+  if(o.pay!=="bank")return `<div class="pay">💵 Thanh toán <b>tiền mặt</b> khi nhận món: <b>${fmt(o.total)}</b></div>`;
+  const qr=`https://img.vietqr.io/image/${SHOP.bankBin}-${SHOP.bankAcc}-compact2.png?amount=${o.total}&addInfo=${encodeURIComponent(o.code)}&accountName=${encodeURIComponent(SHOP.bankHolder)}`;
+  return `<div class="pay"><b>🏦 Quét mã để chuyển khoản</b><br>
+    <img src="${qr}" alt="Mã QR chuyển khoản" onerror="this.style.display='none'"><br>
+    <div>${SHOP.bankName}</div><div class="acc">${SHOP.bankAcc}</div><div>${SHOP.bankHolder}</div>
+    <div style="margin-top:6px">Số tiền: <b>${fmt(o.total)}</b> • Nội dung: <b>${o.code}</b></div>
+    <button class="ghost" onclick="copyStr('${SHOP.bankAcc}','Đã sao chép số tài khoản')">📋 Sao chép số tài khoản</button></div>`;
+}
+function openZaloOrder(){
+  copyTxt();
+  window.open(`https://zalo.me/${SHOP.zalo}`, "_blank");
+}
+function sentNotice(o){
+  if(o.sent==="server")return `<div class="notice ok">🔔 Đơn đã gửi lên hệ thống quán.<br>Trạng thái: <span id="stt" class="${stCls(o.status||'Mới')}">${esc(o.status||"Mới")}</span> <small style="color:var(--muted)">(tự cập nhật)</small><br><small>👉 Bấm nút <b>Gửi đơn qua Zalo</b> bên dưới để nhắn trực tiếp cho chủ quán (${SHOP.zalo}) xác nhận nhanh nhất!</small></div>`;
+  if(o.sent==="telegram")return `<div class="notice ok">🔔 Đơn đã được báo đến chủ quán. Bạn có thể nhắn thêm qua Zalo (${SHOP.zalo}) bên dưới.</div>`;
+  if(o.sent==="fail")return `<div class="notice bad">⚠️ Chưa gửi được đơn tự động (${esc(o.err||"lỗi mạng")}).<br>Hãy bấm <b>Gửi đơn qua Zalo (${SHOP.zalo})</b> ngay bên dưới để quán làm món nhé!</div><button class="ghost" onclick="resend('${o.code}')">🔄 Thử gửi lại lên hệ thống</button>`;
+  return `<div class="notice warn">📩 Hãy bấm nút bên dưới để gửi đơn qua Zalo người bán (<b>${SHOP.zalo}</b>).</div>`;
+}
+function showDone(o){
+  window._txt=buildText(o);
+  $("doneSheet").innerHTML=`<button class="close" onclick="closeOv('ovDone')">✕</button><h2>✅ Đơn ${o.code}</h2>
+   ${sentNotice(o)}
+   ${SHOP.zalo?`<button class="primary green" style="font-size:16px;padding:16px" onclick="openZaloOrder()">💬 Gửi đơn qua Zalo chủ quán (${SHOP.zalo})</button><div class="msg" style="text-align:center;color:var(--muted)">Nội dung đơn đã tự động sao chép – mở Zalo chỉ cần bấm <b>Dán (Paste)</b> và Gửi</div>`:''}
+   ${payBlock(o)}
+   <div class="receipt" style="margin-top:10px">${esc(window._txt)}</div>
+   ${SHOP.phone?`<a href="tel:${SHOP.phone}"><button class="ghost">📞 Gọi quán ${SHOP.phone}</button></a>`:''}
+   <button class="ghost" onclick="copyTxt()">📋 Sao chép nội dung đơn</button>
+   <button class="ghost" onclick="closeOv('ovDone')">Tiếp tục mua</button>`;
+  $("ovDone").classList.add("show");
+  if(pollT){clearInterval(pollT);pollT=null;}
+  if(o.sent==="server"&&!["Hoàn thành","Đã hủy"].includes(o.status)){
+    const tick=async()=>{try{const r=await api("GET",{action:"status",code:o.code,phone:o.phone});
+      if(r.ok&&r.status){const el=$("stt");if(el){el.textContent=r.status;el.className=stCls(r.status);}
+        if(r.status!==o.status){o.status=r.status;const h=getHist(),i=h.findIndex(x=>x.code===o.code);if(i>=0){h[i].status=r.status;setHist(h);}toast("Đơn "+o.code+": "+r.status);}}}catch(_){}};
+    tick();pollT=setInterval(tick,ONLINE.pollSeconds*1000);
+  }
+}
+function copyStr(s,msg){
+  if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(s).then(()=>toast(msg));
+  else{const t=document.createElement("textarea");t.value=s;document.body.appendChild(t);t.select();document.execCommand("copy");t.remove();toast(msg);}
+}
+function copyTxt(){copyStr(window._txt,"Đã sao chép đơn");}
+function openHistory(){
+  const hist=getHist();
+  $("doneSheet").innerHTML=`<button class="close" onclick="closeOv('ovDone')">✕</button><h2>🧾 Đơn đã đặt</h2>`+
+   (hist.length?hist.map((o,i)=>`<div class="hist"><div class="row"><b>${o.code}</b><span class="price">${fmt(o.total)}</span></div>
+     <div class="row"><div>${o.time} • ${o.items.reduce((a,l)=>a+l.qty,0)} món</div>${o.sent==="server"?`<span class="${stCls(o.status||'Mới')}">${esc(o.status||'Mới')}</span>`:o.sent==="fail"?'<span class="pill st-Mới">Chưa gửi</span>':''}</div>
+     <div class="row" style="margin-top:8px;gap:8px"><button class="ghost" style="margin:0" onclick="reorder(${i})">🔁 Đặt lại</button><button class="ghost" style="margin:0" onclick="showDone(getHist()[${i}])">${o.sent==="server"?"📍 Theo dõi":"Xem"}</button></div></div>`).join("")
+   :`<div class="empty">Chưa có đơn nào.</div>`);
+  $("ovDone").classList.add("show");
+}
+function reorder(i){const o=getHist()[i];o.items.forEach(l=>{const ex=cart.find(c=>c.key===l.key);ex?ex.qty+=l.qty:cart.push(l);});save();closeOv("ovDone");openCart();}
+
+/* ===================== TRANG CHỦ QUÁN ===================== */
+let ad={pin:sessionStorage.getItem("anan_pin")||"",orders:[],known:null,filter:"Đang xử lý",timer:null,busy:false};
+function openAdmin(){
+  $("admin").classList.add("show");
+  if(MODE!=="server"){$("admin").innerHTML=`<div class="ahead"><b>🔐 Quản lý đơn</b><button onclick="closeAdmin()">✕ Đóng</button></div>
+    <div class="login"><h3>Chưa kết nối máy chủ đơn hàng</h3><p style="color:var(--muted)">Trang quản lý đơn cần <b>ONLINE.apiUrl</b> (Google Apps Script). ${MODE==="telegram"?"Hiện đơn mới đang được báo qua Telegram.":"Xem file hướng dẫn cài đặt kèm theo."}</p></div>`;return;}
+  ad.pin?startAdmin():renderLogin();
+}
+function closeAdmin(){$("admin").classList.remove("show");if(ad.timer){clearInterval(ad.timer);ad.timer=null;}document.title="An An Milk Tea Picity – Đặt món online";if(location.hash==="#admin")history.replaceState(null,"",location.pathname);}
+function renderLogin(msg){
+  $("admin").innerHTML=`<div class="ahead"><b>🔐 Chủ quán đăng nhập</b><button onclick="closeAdmin()">✕ Đóng</button></div>
+   <div class="login"><div style="font-size:50px">🧋</div><h3>${SHOP.name}</h3>
+   <input class="field" id="pinIn" type="password" inputmode="numeric" placeholder="Mã PIN quản lý" onkeydown="if(event.key==='Enter')doLogin()">
+   ${msg?`<div class="msg err">${msg}</div>`:''}
+   <button class="primary green" onclick="doLogin()">Vào trang quản lý đơn</button>
+   <p class="msg" style="color:var(--muted)">Giữ trang này mở trên điện thoại/máy tính ở quầy để nghe chuông khi có đơn mới.</p></div>`;
+}
+function doLogin(){ad.pin=$("pinIn").value.trim();if(!ad.pin)return;unlockAudio();if("Notification"in window&&Notification.permission==="default")Notification.requestPermission();startAdmin();}
+function startAdmin(){ad.known=null;adminLoad();if(ad.timer)clearInterval(ad.timer);ad.timer=setInterval(adminLoad,ONLINE.pollSeconds*1000);}
+let actx=null;
+function unlockAudio(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();actx.resume();}catch(_){}}
+function ding(){
+  try{unlockAudio();[0,0.35,0.7].forEach(t=>{const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=t===0.35?1175:880;o.connect(g);g.connect(actx.destination);
+    g.gain.setValueAtTime(0.0001,actx.currentTime+t);g.gain.exponentialRampToValueAtTime(0.5,actx.currentTime+t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,actx.currentTime+t+0.3);o.start(actx.currentTime+t);o.stop(actx.currentTime+t+0.32);});}catch(_){}
+  if(navigator.vibrate)navigator.vibrate([300,150,300]);
+}
+async function adminLoad(){
+  if(ad.busy)return;ad.busy=true;
+  try{
+    const r=await api("GET",{action:"list",pin:ad.pin});
+    if(!r.ok){if(r.error==="PIN"){sessionStorage.removeItem("anan_pin");ad.pin="";clearInterval(ad.timer);ad.timer=null;renderLogin("Sai mã PIN");}return;}
+    sessionStorage.setItem("anan_pin",ad.pin);
+    const codes=new Set(r.orders.map(o=>o.code));
+    const fresh=ad.known?r.orders.filter(o=>!ad.known.has(o.code)):[];
+    ad.known=codes;ad.orders=r.orders;ad.lastSync=new Date();
+    if(fresh.length){ding();toast(`🔔 ${fresh.length} đơn mới!`);
+      if("Notification"in window&&Notification.permission==="granted")fresh.forEach(o=>new Notification("🔔 Đơn mới "+o.code,{body:`${o.name} • ${fmt(o.total)} • ${o.mode==='delivery'?'Giao hàng':'Tự lấy'}`}));}
+    ad.freshCodes=new Set(fresh.map(o=>o.code));
+    renderAdmin();
+  }catch(err){const s=$("syncInfo");if(s)s.textContent="⚠️ Mất kết nối – đang thử lại...";}
+  finally{ad.busy=false;}
+}
+function renderAdmin(){
+  const os=ad.orders,today=new Date().toDateString();
+  const td=os.filter(o=>new Date(o.ts).toDateString()===today);
+  const nNew=os.filter(o=>o.status==="Mới").length;
+  const nDoing=os.filter(o=>!["Mới","Hoàn thành","Đã hủy"].includes(o.status)).length;
+  const rev=td.filter(o=>o.status!=="Đã hủy").reduce((a,o)=>a+Number(o.total||0),0);
+  document.title=nNew?`(${nNew}) 🔔 Đơn mới – An An`:"Quản lý đơn – An An";
+  const F={"Đang xử lý":o=>!["Hoàn thành","Đã hủy"].includes(o.status),"Mới":o=>o.status==="Mới","Hoàn thành":o=>o.status==="Hoàn thành","Đã hủy":o=>o.status==="Đã hủy","Tất cả":()=>true};
+  const list=os.filter(F[ad.filter]);
+  $("admin").innerHTML=`<div class="ahead"><b>📋 Quản lý đơn – ${SHOP.name}</b><button onclick="adminLoad()">⟳</button><button onclick="sessionStorage.removeItem('anan_pin');ad.pin='';closeAdmin()">Đăng xuất</button></div>
+   <div class="wrap">
+    <div class="kpis">
+      <div class="kpi"><div>🔴 Đơn mới</div><b>${nNew}</b></div>
+      <div class="kpi"><div>🟡 Đang xử lý</div><b>${nDoing}</b></div>
+      <div class="kpi"><div>📦 Đơn hôm nay</div><b>${td.length}</b></div>
+      <div class="kpi"><div>💰 Doanh thu hôm nay</div><b>${fmt(rev)}</b></div>
+    </div>
+    <div class="tabs">${Object.keys(F).map(k=>`<button class="tab ${ad.filter===k?'on':''}" onclick="ad.filter='${k}';renderAdmin()">${k}</button>`).join("")}</div>
+    <div class="msg" id="syncInfo" style="color:var(--muted);margin-bottom:8px">Tự cập nhật mỗi ${ONLINE.pollSeconds}s • Lần cuối: ${ad.lastSync?ad.lastSync.toLocaleTimeString("vi-VN"):"-"}</div>
+    <div class="olist">${list.length?list.map(orderCard).join(""):`<div class="empty">Không có đơn.</div>`}</div>
+   </div>`;
+}
+function nextStatus(o){
+  if(o.status==="Mới")return "Đã nhận";
+  if(o.status==="Đã nhận")return "Đang pha";
+  if(o.status==="Đang pha")return o.mode==="delivery"?"Đang giao":"Sẵn sàng";
+  if(o.status==="Sẵn sàng"||o.status==="Đang giao")return "Hoàn thành";
+  return "";
+}
+function orderCard(o){
+  const nx=nextStatus(o),isNew=ad.freshCodes&&ad.freshCodes.has(o.code);
+  return `<div class="ocard ${o.status==='Mới'||isNew?'new':''}">
+   <div class="row"><b style="font-size:17px">${esc(o.code)}</b><span class="${stCls(o.status)}">${esc(o.status)}</span></div>
+   <div class="meta">🕒 Đặt: ${esc(o.time)}${o.receiveTime?' • ⏰ Nhận: <b>'+esc(o.receiveTime)+'</b>':''}</div>
+   <div style="margin-top:6px"><b>${esc(o.name)}</b> • <a href="tel:${esc(o.phone)}">📞 ${esc(o.phone)}</a> • <a href="https://zalo.me/${esc(o.phone)}" target="_blank">Zalo</a></div>
+   <div class="meta">${o.mode==='delivery'?'🛵 Giao: '+esc(o.addr):'🏪 Khách tự đến lấy'}</div>
+   <div class="lines">${(o.items||[]).map(l=>`<div><b>${esc(l.qty)}×</b> ${esc(l.name)} <span style="float:right">${fmt(l.unit*l.qty)}</span>${l.opt?`<br><small>${esc(l.opt)}</small>`:''}</div>`).join("")}</div>
+   ${o.note?`<div class="meta">📝 ${esc(o.note)}</div>`:''}
+   <div class="row" style="margin-top:6px"><span>${o.pay==='bank'?'🏦 Chuyển khoản':'💵 Tiền mặt'} ${o.paid?'<span class="pill st-Hoàn-thành">Đã thu</span>':'<span class="pill st-Mới">Chưa thu</span>'}</span><b class="price" style="font-size:19px">${fmt(o.total)}</b></div>
+   <div class="abtns">
+     ${nx?`<button class="go" onclick="adUpdate('${esc(o.code)}',{status:'${nx}'})">→ ${nx}</button>`:''}
+     <button onclick="adUpdate('${esc(o.code)}',{paid:${!o.paid}})">${o.paid?'↩ Bỏ đã thu':'💰 Đã thu tiền'}</button>
+     ${!["Hoàn thành","Đã hủy"].includes(o.status)?`<button class="cancel" onclick="if(confirm('Hủy đơn ${esc(o.code)}?'))adUpdate('${esc(o.code)}',{status:'Đã hủy'})">Hủy</button>`:''}
+   </div></div>`;
+}
+async function adUpdate(code,patch){
+  try{const r=await api("POST",Object.assign({action:"update",pin:ad.pin,code},patch));
+    if(!r.ok)return toast("Lỗi: "+(r.error||"không cập nhật được"));
+    const o=ad.orders.find(x=>x.code===code);if(o)Object.assign(o,patch);ad.freshCodes&&ad.freshCodes.delete(code);renderAdmin();toast("Đã cập nhật "+code);
+  }catch(_){toast("Mất kết nối, thử lại");}
+}
+
+/* ---------- KHỞI ĐỘNG ---------- */
+(function(){const t=$("onlineTag");
+  if(MODE==="offline"){t.textContent="📩 Gửi đơn qua Zalo";t.classList.add("off");}
+  else t.textContent="🟢 Đặt hàng online – báo quán tức thì";})();
+renderTabs();renderMenu();updateBar();
+if(location.hash==="#admin")openAdmin();
+</script>
+</body>
+</html>
